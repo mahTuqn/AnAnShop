@@ -1,0 +1,87 @@
+flowchart LR
+    customer([Khách hàng])
+    member([Thành viên])
+    staff([Nhân viên])
+    admin([Quản trị viên])
+    paymentGateway([Cổng thanh toán])
+    carrier([Đơn vị vận chuyển])
+
+    subgraph storefront ["Hệ thống bán hàng An An Shop"]
+        browse["Xem sản phẩm"]
+        search["Tìm kiếm và lọc"]
+        viewDetail["Xem chi tiết"]
+        manageCart["Quản lý giỏ hàng"]
+        checkout["Đặt hàng"]
+        applyCoupon["Áp dụng mã giảm giá"]
+        selectPayment["Chọn thanh toán"]
+        trackGuest["Tra cứu đơn hàng"]
+        register["Đăng ký tài khoản"]
+        login["Đăng nhập"]
+        manageProfile["Quản lý hồ sơ"]
+        manageAddress["Quản lý địa chỉ"]
+        manageWishlist["Quản lý yêu thích"]
+        trackOrder["Theo dõi đơn hàng"]
+        cancelOrder["Yêu cầu hủy đơn"]
+        reviewProduct["Đánh giá sản phẩm"]
+        processPayment["Xử lý thanh toán"]
+        updateDelivery["Cập nhật vận chuyển"]
+    end
+
+    subgraph backoffice ["Khu vực quản trị"]
+        manageOrder["Quản lý đơn hàng"]
+        manageProduct["Quản lý sản phẩm"]
+        manageInventory["Quản lý tồn kho"]
+        manageCustomer["Quản lý khách hàng"]
+        managePromotion["Quản lý khuyến mãi"]
+        moderateReview["Duyệt đánh giá"]
+        manageContent["Quản lý nội dung"]
+        viewReport["Xem báo cáo"]
+        manageStaff["Quản lý nhân viên"]
+        configureStore["Cấu hình cửa hàng"]
+    end
+
+    customer --> browse
+    customer --> search
+    customer --> viewDetail
+    customer --> manageCart
+    customer --> checkout
+    customer --> trackGuest
+    customer --> register
+    checkout -.->|"Bao gồm"| applyCoupon
+    checkout -.->|"Bao gồm"| selectPayment
+    selectPayment --> processPayment
+
+    member --> login
+    member --> manageProfile
+    member --> manageAddress
+    member --> manageWishlist
+    member --> trackOrder
+    member --> cancelOrder
+    member --> reviewProduct
+
+    staff --> manageOrder
+    staff --> manageProduct
+    staff --> manageInventory
+    staff --> manageCustomer
+    staff --> managePromotion
+    staff --> moderateReview
+    staff --> manageContent
+
+    admin --> viewReport
+    admin --> manageStaff
+    admin --> configureStore
+    admin --> manageOrder
+
+    paymentGateway --> processPayment
+    carrier --> updateDelivery
+    updateDelivery --> trackOrder
+
+    style storefront fill:#FFF9F5,stroke:#B96576
+    style backoffice fill:#EDF4EE,stroke:#3F805B
+    style customer fill:#C2E5FF,stroke:#3DADFF
+    style member fill:#DCCCFF,stroke:#874FFF
+    style staff fill:#FFECBD,stroke:#FFC943
+    style admin fill:#FFE0C2,stroke:#FF9E42
+    style paymentGateway fill:#D9D9D9,stroke:#B3B3B3
+    style carrier fill:#D9D9D9,stroke:#B3B3B3
+

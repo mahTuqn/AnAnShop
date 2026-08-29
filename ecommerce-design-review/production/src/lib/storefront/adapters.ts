@@ -1,0 +1,21 @@
+import { findProduct, orders, products } from "./data";
+import type { Category } from "./types";
+
+export type CatalogQuery = { q?: string; category?: string; size?: string; sort?: string };
+
+export async function getCatalog(query: CatalogQuery = {}) {
+  const normalized = query.q?.trim().toLocaleLowerCase("vi") ?? "";
+  let result = products.filter((product) => {
+    const matchesText = !normalized || `${product.name} ${product.material} ${product.categoryLabel}`.toLocaleLowerCase("vi").includes(normalized);
+    const matchesCategory = !query.category || query.category === "all" || product.category === query.category as Category;
+    const matchesSize = !query.size || product.sizes.some((size) => size.name === query.size);
+    return matchesText && matchesCategory && matchesSize;
+  });
+  if (query.sort === "price-asc") result = [...result].sort((a, b) => a.price - b.price);
+  if (query.sort === "price-desc") result = [...result].sort((a, b) => b.price - a.price);
+  return result;
+}
+
+export async function getProduct(slug: string) { return findProduct(slug) ?? null; }
+export async function getOrders() { return orders; }
+export async function getOrder(code: string) { return orders.find((order) => order.code === code) ?? null; }

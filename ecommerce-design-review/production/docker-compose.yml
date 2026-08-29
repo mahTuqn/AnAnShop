@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: anan_shop
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "55433:5432"
+    volumes:
+      - anan_postgres_data:/var/lib/postgresql/data
+      - ../database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ../database/migrations/0002_checkout_inventory_functions.sql:/docker-entrypoint-initdb.d/02-checkout-inventory.sql:ro
+      - ../database/migrations/0003_store_settings_and_refund_idempotency.sql:/docker-entrypoint-initdb.d/03-settings-refunds.sql:ro
+      - ../database/migrations/0004_audit_permission.sql:/docker-entrypoint-initdb.d/04-audit-permission.sql:ro
+      - ../database/migrations/0005_customer_account_and_order_invariants.sql:/docker-entrypoint-initdb.d/05-customer-account.sql:ro
+      - ../database/migrations/0006_content_permissions.sql:/docker-entrypoint-initdb.d/06-content-permissions.sql:ro
+      - ../database/migrations/0007_notification_read_state.sql:/docker-entrypoint-initdb.d/07-notification-read.sql:ro
+      - ../database/migrations/0008_fulfillment_lifecycle.sql:/docker-entrypoint-initdb.d/08-fulfillment-lifecycle.sql:ro
+      - ../database/seed.sql:/docker-entrypoint-initdb.d/10-seed.sql:ro
+      - ../database/demo-catalog.seed.sql:/docker-entrypoint-initdb.d/11-demo-catalog.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d anan_shop"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  anan_postgres_data:

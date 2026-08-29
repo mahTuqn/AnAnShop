@@ -1,0 +1,69 @@
+flowchart TD
+    start([Bắt đầu])
+    browse["Xem hoặc tìm sản phẩm"]
+    detail["Xem chi tiết sản phẩm"]
+    selectVariant["Chọn màu và kích thước"]
+    available{Còn hàng?}
+    adjustVariant["Chọn biến thể khác"]
+    addCart["Thêm vào giỏ hàng"]
+    continueShopping{Tiếp tục mua?}
+    reviewCart["Kiểm tra giỏ hàng"]
+    cartValid{Giỏ hàng hợp lệ?}
+    adjustCart["Điều chỉnh giỏ hàng"]
+    checkout["Bắt đầu thanh toán"]
+    member{Đã đăng nhập?}
+    loadAddress["Chọn địa chỉ đã lưu"]
+    enterAddress["Nhập thông tin nhận hàng"]
+    validateAddress{Thông tin hợp lệ?}
+    fixAddress["Sửa thông tin"]
+    selectShipping["Chọn vận chuyển"]
+    applyCoupon["Nhập mã giảm giá"]
+    couponValid{Mã hợp lệ?}
+    calculateTotal["Tính lại tổng tiền"]
+    selectPayment["Chọn phương thức thanh toán"]
+    confirm["Xác nhận đơn hàng"]
+    reserveStock["Giữ tồn kho"]
+    onlinePayment{Thanh toán online?}
+    createPayment["Tạo giao dịch"]
+    paymentSuccess{Thanh toán thành công?}
+    paymentRetry{Thử lại?}
+    releaseStock["Hoàn tồn kho"]
+    createOrder["Tạo đơn hàng PENDING"]
+    confirmOrder["Xác nhận đơn hàng"]
+    notify["Gửi xác nhận đơn"]
+    tracking["Theo dõi đơn hàng"]
+    finish([Hoàn tất])
+    cancelled([Đã hủy])
+
+    start --> browse --> detail --> selectVariant --> available
+    available -->|"Không"| adjustVariant --> selectVariant
+    available -->|"Có"| addCart --> continueShopping
+    continueShopping -->|"Có"| browse
+    continueShopping -->|"Không"| reviewCart --> cartValid
+    cartValid -->|"Không"| adjustCart --> reviewCart
+    cartValid -->|"Có"| checkout --> member
+    member -->|"Có"| loadAddress --> validateAddress
+    member -->|"Không"| enterAddress --> validateAddress
+    validateAddress -->|"Không"| fixAddress --> enterAddress
+    validateAddress -->|"Có"| selectShipping --> applyCoupon --> couponValid
+    couponValid -->|"Có"| calculateTotal
+    couponValid -->|"Không"| selectPayment
+    calculateTotal --> selectPayment --> confirm --> reserveStock --> createOrder --> onlinePayment
+    onlinePayment -->|"Không"| confirmOrder
+    onlinePayment -->|"Có"| createPayment --> paymentSuccess
+    paymentSuccess -->|"Có"| confirmOrder
+    paymentSuccess -->|"Không"| paymentRetry
+    paymentRetry -->|"Có"| createPayment
+    paymentRetry -->|"Không"| releaseStock --> cancelled
+    confirmOrder --> notify --> tracking --> finish
+
+    style start fill:#C2E5FF,stroke:#3DADFF
+    style finish fill:#CDF4D3,stroke:#66D575
+    style cancelled fill:#FFCDC2,stroke:#FF7556
+    style available fill:#FFECBD,stroke:#FFC943
+    style cartValid fill:#FFECBD,stroke:#FFC943
+    style validateAddress fill:#FFECBD,stroke:#FFC943
+    style couponValid fill:#FFECBD,stroke:#FFC943
+    style onlinePayment fill:#FFECBD,stroke:#FFC943
+    style paymentSuccess fill:#FFECBD,stroke:#FFC943
+    style paymentRetry fill:#FFECBD,stroke:#FFC943

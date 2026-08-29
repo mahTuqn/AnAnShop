@@ -1,0 +1,12 @@
+.auth-visual > .logo { align-self: flex-start; }
+.auth-visual ul { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 10px; font-size: 12px; }
+.auth-visual li::before { content: "✓"; display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 9px; border-radius: 50%; background: #ffffff22; }
+.auth-intro { color: var(--muted); line-height: 1.7; margin-bottom: 5px; }
+.auth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.auth-grid .full { grid-column: span 2; }
+.auth-terms { display: flex !important; align-items: flex-start; gap: 8px; line-height: 1.6; color: var(--muted); font-weight: 400 !important; }
+.auth-terms input { width: 16px !important; height: 16px !important; margin: 2px 0 0 !important; flex: none; }
+.auth-terms button { border: 0; background: none; padding: 0; color: var(--brand); text-decoration: underline; }
+.otp-label { text-align: center; }
+.otp-input { height: 64px !important; text-align: center; font-size: 25px !important; letter-spacing: .42em; font-weight: 600; color: var(--brand); }
+@media (max-width: 600px) { .auth-grid { grid-template-columns: 1fr; } .auth-grid .full { grid-column: auto; } }

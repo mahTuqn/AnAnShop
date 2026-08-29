@@ -1,0 +1,37 @@
+flowchart LR
+    staff([Nhân viên])
+    admin([Quản trị viên])
+    support([CSKH])
+    warehouse([Nhân viên kho])
+    subgraph adminArea [Khu vực quản trị An An Shop]
+      dashboard[Xem dashboard]
+      orders[Quản lý đơn hàng và vận chuyển]
+      returns[Xử lý đổi trả và hoàn tiền]
+      catalog[Quản lý sản phẩm và biến thể]
+      categories[Quản lý danh mục và thuộc tính]
+      inventory[Kiểm kê và điều chỉnh tồn]
+      customers[Quản lý khách hàng]
+      promotions[Quản lý khuyến mãi]
+      reviews[Kiểm duyệt đánh giá]
+      content[Quản lý nội dung]
+      reports[Xem và xuất báo cáo]
+      settings[Cấu hình cửa hàng]
+      access[Quản lý vai trò và quyền]
+      audit[Xem nhật ký kiểm toán]
+    end
+    staff --> dashboard
+    support --> orders
+    support --> returns
+    support --> customers
+    warehouse --> orders
+    warehouse --> inventory
+    staff --> catalog
+    staff --> categories
+    staff --> promotions
+    staff --> reviews
+    staff --> content
+    admin --> reports
+    admin --> settings
+    admin --> access
+    admin --> audit
+    admin --> orders

@@ -1,0 +1,26 @@
+flowchart TD
+    start([Nhân viên mở backoffice]) --> authenticate[Kiểm tra session]
+    authenticate --> authorized{Có quyền trên server?}
+    authorized -->|Không| deny[Trả 403 và ghi audit từ chối] --> finishDenied([Kết thúc])
+    authorized -->|Có| selectAction{Chọn nghiệp vụ}
+    selectAction --> order[Đơn hàng / đổi trả]
+    order --> validateOrder[Kiểm tra chuyển trạng thái hợp lệ]
+    validateOrder --> orderTxn[Transaction: đơn hàng, tồn kho, hoàn tiền]
+    orderTxn --> orderAudit[Ghi audit và phát sự kiện thông báo]
+    selectAction --> catalog[Sản phẩm / danh mục]
+    catalog --> validateCatalog[Kiểm tra SKU, giá, option và slug]
+    validateCatalog --> catalogTxn[Lưu sản phẩm, variant, ảnh và facet]
+    catalogTxn --> catalogAudit[Ghi audit và làm mới catalog cache]
+    selectAction --> inventory[Điều chỉnh tồn kho]
+    inventory --> inventoryReason{Có số lượng và lý do hợp lệ?}
+    inventoryReason -->|Không| rejectInventory[Trả lỗi validation]
+    inventoryReason -->|Có| inventoryTxn[Khóa dòng và tạo inventory_movement]
+    inventoryTxn --> inventoryAudit[Ghi audit và cảnh báo tồn thấp]
+    selectAction --> moderation[Duyệt đánh giá / nội dung]
+    moderation --> moderate[Kiểm tra trạng thái và nội dung]
+    moderate --> moderationAudit[Ghi người duyệt và audit]
+    orderAudit --> success([Hoàn tất])
+    catalogAudit --> success
+    inventoryAudit --> success
+    moderationAudit --> success
+    rejectInventory --> selectAction

@@ -1,0 +1,222 @@
+classDiagram
+    direction LR
+
+    class User {
+        +UUID id
+        +String fullName
+        +String email
+        +String phone
+        +String passwordHash
+        +UserRole role
+        +UserStatus status
+        +DateTime createdAt
+        +register()
+        +login()
+        +updateProfile()
+    }
+
+    class Address {
+        +UUID id
+        +UUID userId
+        +String fullName
+        +String phone
+        +String province
+        +String district
+        +String ward
+        +String line1
+        +Boolean isDefault
+    }
+
+    class Category {
+        +UUID id
+        +String name
+        +String slug
+        +UUID parentId
+        +Boolean active
+    }
+
+    class Product {
+        +UUID id
+        +UUID categoryId
+        +String name
+        +String slug
+        +String description
+        +String material
+        +String stage
+        +Decimal basePrice
+        +ProductStatus status
+        +publish()
+        +archive()
+    }
+
+    class ProductImage {
+        +UUID id
+        +UUID productId
+        +String url
+        +String altText
+        +Integer position
+    }
+
+    class ProductVariant {
+        +UUID id
+        +UUID productId
+        +String sku
+        +String size
+        +String color
+        +Decimal price
+        +Boolean active
+        +getAvailableStock()
+    }
+
+    class Inventory {
+        +UUID id
+        +UUID variantId
+        +Integer quantity
+        +Integer reserved
+        +Integer lowStockLevel
+        +reserve()
+        +release()
+        +deduct()
+    }
+
+    class Cart {
+        +UUID id
+        +UUID userId
+        +String sessionId
+        +DateTime updatedAt
+        +calculateSubtotal()
+        +clear()
+    }
+
+    class CartItem {
+        +UUID id
+        +UUID cartId
+        +UUID variantId
+        +Integer quantity
+        +Decimal unitPrice
+        +updateQuantity()
+    }
+
+    class Order {
+        +UUID id
+        +String code
+        +UUID userId
+        +OrderStatus status
+        +PaymentStatus paymentStatus
+        +Decimal subtotal
+        +Decimal shippingFee
+        +Decimal discount
+        +Decimal total
+        +String addressSnapshot
+        +DateTime createdAt
+        +calculateTotal()
+        +cancel()
+        +changeStatus()
+    }
+
+    class OrderItem {
+        +UUID id
+        +UUID orderId
+        +UUID variantId
+        +String productName
+        +String sku
+        +String attributesSnapshot
+        +Integer quantity
+        +Decimal unitPrice
+    }
+
+    class Payment {
+        +UUID id
+        +UUID orderId
+        +PaymentMethod method
+        +PaymentStatus status
+        +String transactionId
+        +Decimal amount
+        +DateTime paidAt
+        +authorize()
+        +verifyWebhook()
+        +refund()
+    }
+
+    class Shipment {
+        +UUID id
+        +UUID orderId
+        +String carrier
+        +String trackingCode
+        +ShipmentStatus status
+        +DateTime estimatedDelivery
+        +updateStatus()
+    }
+
+    class Coupon {
+        +UUID id
+        +String code
+        +DiscountType type
+        +Decimal value
+        +Decimal minimumOrder
+        +Integer usageLimit
+        +DateTime startsAt
+        +DateTime endsAt
+        +Boolean active
+        +validate()
+        +calculateDiscount()
+    }
+
+    class OrderCoupon {
+        +UUID orderId
+        +UUID couponId
+        +Decimal discountAmount
+    }
+
+    class Review {
+        +UUID id
+        +UUID userId
+        +UUID productId
+        +UUID orderItemId
+        +Integer rating
+        +String content
+        +ReviewStatus status
+        +DateTime createdAt
+        +approve()
+        +reject()
+    }
+
+    class Wishlist {
+        +UUID id
+        +UUID userId
+        +DateTime createdAt
+    }
+
+    class WishlistItem {
+        +UUID wishlistId
+        +UUID productId
+        +DateTime createdAt
+    }
+
+    User "1" --> "0..*" Address : owns
+    User "1" --> "0..1" Cart : has
+    User "1" --> "0..*" Order : places
+    User "1" --> "0..*" Review : writes
+    User "1" --> "0..1" Wishlist : owns
+
+    Category "1" --> "0..*" Product : contains
+    Category "0..1" --> "0..*" Category : parent
+    Product "1" *-- "1..*" ProductVariant : variants
+    Product "1" *-- "0..*" ProductImage : images
+    ProductVariant "1" *-- "1" Inventory : stock
+
+    Cart "1" *-- "0..*" CartItem : contains
+    CartItem "*" --> "1" ProductVariant : selects
+
+    Order "1" *-- "1..*" OrderItem : contains
+    OrderItem "*" --> "1" ProductVariant : references
+    Order "1" --> "0..*" Payment : payments
+    Order "1" --> "0..1" Shipment : shipment
+    Order "1" --> "0..*" OrderCoupon : discounts
+    Coupon "1" --> "0..*" OrderCoupon : applied
+
+    Review "*" --> "1" Product : evaluates
+    Review "0..1" --> "1" OrderItem : verifies
+    Wishlist "1" *-- "0..*" WishlistItem : contains
+    WishlistItem "*" --> "1" Product : saves
+

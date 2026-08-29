@@ -1,0 +1,5 @@
+export const metadata = { title: "Chính sách bảo mật" };
+
+export default function PrivacyPage() {
+  return <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6"><p className="text-xs font-semibold tracking-[.2em] text-[#8a493d]">AN TOÀN THÔNG TIN</p><h1 className="mt-3 font-serif text-4xl">Chính sách bảo mật</h1><div className="mt-8 space-y-8 leading-7 text-[#5f5550]"><section><h2 className="text-xl font-semibold text-[#332824]">Thông tin được sử dụng</h2><p className="mt-2">An An sử dụng thông tin liên hệ, địa chỉ và nội dung đơn hàng để xử lý giao nhận, chăm sóc khách hàng và thực hiện nghĩa vụ pháp lý.</p></section><section><h2 className="text-xl font-semibold text-[#332824]">Bảo vệ dữ liệu</h2><p className="mt-2">Phiên đăng nhập được bảo vệ bằng cookie HttpOnly. Dữ liệu nhạy cảm không được hiển thị công khai hoặc yêu cầu qua email, tin nhắn.</p></section><section><h2 className="text-xl font-semibold text-[#332824]">Quyền của khách hàng</h2><p className="mt-2">Mẹ có thể yêu cầu xem, sửa hoặc xóa thông tin tài khoản theo quy định bằng cách liên hệ hello@ananshop.vn.</p></section></div></main>;
+}

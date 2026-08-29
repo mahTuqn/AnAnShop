@@ -1,0 +1,169 @@
+erDiagram
+    direction LR
+
+    USER ||--o{ ADDRESS : owns
+    USER ||--o| CART : has
+    USER ||--o{ ORDER : places
+    USER ||--o{ REVIEW : writes
+    USER ||--o| WISHLIST : owns
+    CATEGORY ||--o{ PRODUCT : contains
+    PRODUCT ||--|{ VARIANT : has
+    VARIANT ||--|| INVENTORY : tracks
+    CART ||--o{ CART_ITEM : contains
+    VARIANT ||--o{ CART_ITEM : selected
+    ORDER ||--|{ ORDER_ITEM : contains
+    VARIANT o|..o{ ORDER_ITEM : references
+    ORDER ||--o{ PAYMENT : payments
+    ORDER ||--o| SHIPMENT : ships
+    ORDER ||--o{ ORDER_COUPON : discounts
+    COUPON ||--o{ ORDER_COUPON : applied
+    PRODUCT ||--o{ REVIEW : receives
+    WISHLIST ||--o{ WISHLIST_ITEM : contains
+    PRODUCT ||--o{ WISHLIST_ITEM : saved
+    ORDER ||--o{ RETURN_REQUEST : returns
+
+    USER {
+        uuid id PK
+        string email UK
+        string phone UK
+        string passwordHash
+        string fullName
+        string status
+        datetime createdAt
+    }
+    ADDRESS {
+        uuid id PK
+        uuid userId FK
+        string fullName
+        string phone
+        string province
+        string district
+        string ward
+        string line1
+        bool isDefault
+    }
+    CATEGORY {
+        uuid id PK
+        uuid parentId FK
+        string name
+        string slug UK
+        int position
+        bool active
+    }
+    PRODUCT {
+        uuid id PK
+        uuid categoryId FK
+        string name
+        string slug UK
+        string material
+        string status
+        json metadata
+    }
+    VARIANT {
+        uuid id PK
+        uuid productId FK
+        string sku UK
+        decimal price
+        decimal compareAtPrice
+        bool active
+    }
+    INVENTORY {
+        uuid id PK
+        uuid variantId FK, UK
+        int onHand
+        int reserved
+        int lowStockLevel
+    }
+    CART {
+        uuid id PK
+        uuid userId FK
+        string sessionId
+        string status
+        datetime expiresAt
+    }
+    CART_ITEM {
+        uuid id PK
+        uuid cartId FK
+        uuid variantId FK
+        int quantity
+        decimal unitPrice
+    }
+    ORDER {
+        uuid id PK
+        string code UK
+        uuid userId FK
+        string status
+        string paymentStatus
+        decimal grandTotal
+        string idempotencyKey UK
+        datetime placedAt
+    }
+    ORDER_ITEM {
+        uuid id PK
+        uuid orderId FK
+        uuid variantId FK
+        string productName
+        string sku
+        json attributes
+        int quantity
+        decimal lineTotal
+    }
+    COUPON {
+        uuid id PK
+        string code UK
+        string type
+        string scope
+        decimal value
+        decimal minimumOrder
+        datetime endsAt
+    }
+    ORDER_COUPON {
+        uuid orderId PK, FK
+        uuid couponId FK
+        string code PK
+        decimal discountAmount
+    }
+    PAYMENT {
+        uuid id PK
+        uuid orderId FK
+        string method
+        string status
+        string transactionId UK
+        string idempotencyKey UK
+        decimal amount
+    }
+    SHIPMENT {
+        uuid id PK
+        uuid orderId FK
+        string carrier
+        string trackingCode UK
+        string status
+        datetime estimatedDeliveryAt
+    }
+    REVIEW {
+        uuid id PK
+        uuid userId FK
+        uuid productId FK
+        uuid orderItemId FK
+        int rating
+        string status
+        bool verifiedPurchase
+    }
+    WISHLIST {
+        uuid id PK
+        uuid userId FK, UK
+        datetime createdAt
+    }
+    WISHLIST_ITEM {
+        uuid wishlistId PK, FK
+        uuid productId PK, FK
+        datetime createdAt
+    }
+    RETURN_REQUEST {
+        uuid id PK
+        uuid orderId FK
+        uuid userId FK
+        string status
+        string reason
+        datetime requestedAt
+    }

@@ -1,0 +1,24 @@
+classDiagram
+    direction LR
+    class User { +UUID id +String email +UserStatus status }
+    class Role { +UUID id +String code +String name }
+    class Permission { +UUID id +String code +String name }
+    class UserRole { +UUID userId +UUID roleId +DateTime assignedAt }
+    class RolePermission { +UUID roleId +UUID permissionId }
+    class InventoryItem { +UUID id +UUID variantId +Int onHand +Int reserved +available() }
+    class InventoryMovement { +UUID id +MovementType type +Int quantity +String referenceType +UUID createdBy }
+    class ReturnRequest { +UUID id +UUID orderId +ReturnStatus status +String reason +approve() +reject() }
+    class ReturnItem { +UUID id +UUID orderItemId +Int quantity +Decimal refundAmount }
+    class Refund { +UUID id +UUID paymentId +Decimal amount +String reason }
+    class ContentEntry { +UUID id +ContentType type +String slug +ContentStatus status +publish() }
+    class AuditLog { +UUID id +UUID actorUserId +String action +String entityType +JSON beforeData +JSON afterData }
+    User "1" --> "0..*" UserRole : assigned
+    Role "1" --> "0..*" UserRole : contains
+    Role "1" --> "0..*" RolePermission : grants
+    Permission "1" --> "0..*" RolePermission : included
+    User "0..1" --> "0..*" InventoryMovement : creates
+    InventoryItem "1" --> "0..*" InventoryMovement : records
+    ReturnRequest "1" *-- "1..*" ReturnItem : contains
+    ReturnRequest "1" --> "0..*" Refund : resultsIn
+    User "0..1" --> "0..*" ContentEntry : authors
+    User "0..1" --> "0..*" AuditLog : performs

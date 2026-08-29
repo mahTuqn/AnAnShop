@@ -1,0 +1,37 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { AccessibleDialog } from "./accessible-dialog";
+
+type Order = { id: string; code: string; customerName: string; placedAt: string; grandTotal: string; productCount: number; paymentMethod: string; status: string; details: Array<[string, string]> };
+const transitions: Record<string, string[]> = { PENDING: ["CONFIRMED", "CANCELLED"], CONFIRMED: ["PROCESSING", "CANCELLED"], PROCESSING: ["SHIPPING"], SHIPPING: ["DELIVERED"] };
+const statusMap: Record<string, string> = { PENDING: "Chờ xác nhận", CONFIRMED: "Đã xác nhận", PROCESSING: "Đang chuẩn bị", SHIPPING: "Đang giao", DELIVERED: "Đã giao", CANCELLED: "Đã hủy", RETURN_REQUESTED: "Yêu cầu trả hàng", RETURNED: "Đã nhận hàng trả" };
+
+export function AdminOrdersClient({ orders }: { orders: Order[] }) {
+  const router = useRouter();
+  const [query, setQuery] = useState(""); const [statusFilter, setStatusFilter] = useState("ALL"); const [selected, setSelected] = useState<Order | null>(null);
+  const [newStatus, setNewStatus] = useState(""); const [reason, setReason] = useState(""); const [carrier, setCarrier] = useState(""); const [service, setService] = useState(""); const [trackingCode, setTrackingCode] = useState(""); const [estimate, setEstimate] = useState(""); const [error, setError] = useState(""); const [updating, setUpdating] = useState(false);
+  const shown = orders.filter((item) => (item.code + item.customerName).toLocaleLowerCase("vi").includes(query.toLocaleLowerCase("vi")) && (statusFilter === "ALL" || item.status === statusFilter));
+  const open = (order: Order) => { setSelected(order); setNewStatus(transitions[order.status]?.[0] ?? ""); setReason(""); setCarrier(""); setService(""); setTrackingCode(""); setEstimate(""); setError(""); };
+  const update = async () => {
+    if (!selected || !newStatus) return; setUpdating(true); setError("");
+    const body: Record<string, unknown> = { status: newStatus, reason: reason || undefined };
+    if (newStatus === "SHIPPING") body.shipment = { carrier, service: service || undefined, trackingCode, estimatedDeliveryAt: estimate || undefined };
+    try {
+      const response = await fetch(`/api/admin/orders/${selected.id}/transition`, { method: "PATCH", credentials: "same-origin", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+      const payload = await response.json(); if (!response.ok) throw new Error(payload.error?.message ?? "Không thể cập nhật đơn hàng");
+      setSelected(null); router.refresh();
+    } catch (cause) { setError(cause instanceof Error ? cause.message : "Không thể cập nhật đơn hàng"); }
+    finally { setUpdating(false); }
+  };
+  return <section aria-labelledby="orders-title" data-testid="admin-orders-page">
+    <div className="mb-6"><p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">An An Backoffice</p><h1 id="orders-title" className="mt-1 text-3xl font-semibold">Đơn hàng & giao vận</h1><p className="mt-2 text-sm text-slate-600">Mỗi bước được kiểm tra trạng thái, thanh toán, tồn kho và mã vận đơn trong cùng transaction.</p></div>
+    <div className="mb-4 grid gap-3 rounded-2xl border bg-white p-3 sm:grid-cols-[1fr_220px]"><input aria-label="Tìm đơn hàng" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Mã đơn hoặc khách hàng" className="min-h-11 rounded-xl border px-4"/><select aria-label="Lọc trạng thái" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="min-h-11 rounded-xl border bg-white px-3"><option value="ALL">Tất cả</option>{Object.keys(statusMap).map((key) => <option key={key} value={key}>{statusMap[key]}</option>)}</select></div>
+    <div className="overflow-x-auto rounded-2xl border bg-white"><table className="w-full min-w-[820px] text-left text-sm"><thead className="bg-slate-50 text-xs uppercase text-slate-500"><tr>{["Mã đơn","Khách hàng","Ngày đặt","Số lượng","Tổng tiền","Thanh toán","Trạng thái",""].map((h) => <th className="px-5 py-3" key={h}>{h}</th>)}</tr></thead><tbody className="divide-y">{shown.map((item) => <tr key={item.id}><td className="px-5 py-4 font-semibold">{item.code}</td><td className="px-5 py-4">{item.customerName}</td><td className="px-5 py-4">{item.placedAt}</td><td className="px-5 py-4">{item.productCount}</td><td className="px-5 py-4">{item.grandTotal}</td><td className="px-5 py-4">{item.paymentMethod}</td><td className="px-5 py-4">{statusMap[item.status] ?? item.status}</td><td className="px-5 py-4"><button className="font-semibold text-emerald-800" onClick={() => open(item)}>Chi tiết</button></td></tr>)}</tbody></table>{!shown.length && <p className="p-10 text-center text-slate-500">Không có đơn phù hợp.</p>}</div>
+    <AccessibleDialog open={Boolean(selected)} title="Xử lý đơn hàng" onClose={() => setSelected(null)} footer={<><button disabled={updating || !newStatus} onClick={() => void update()} className="min-h-11 rounded-xl bg-[#173c32] px-5 font-semibold text-white disabled:opacity-50">{updating ? "Đang lưu…" : "Xác nhận bước tiếp theo"}</button><button onClick={() => setSelected(null)} className="min-h-11 rounded-xl border px-5">Đóng</button></>}>
+      {selected && <div className="space-y-5"><div><h3 className="font-semibold">{selected.code} · {selected.customerName}</h3><dl className="mt-3 divide-y rounded-xl border">{selected.details.map(([label,value]) => <div className="grid gap-1 p-3 sm:grid-cols-[130px_1fr]" key={label}><dt className="text-slate-500">{label}</dt><dd>{value}</dd></div>)}</dl></div>{transitions[selected.status]?.length ? <><label className="block text-sm font-medium">Bước tiếp theo<select value={newStatus} onChange={(e) => setNewStatus(e.target.value)} className="mt-2 w-full rounded-xl border bg-white p-3">{transitions[selected.status].map((status) => <option key={status} value={status}>{statusMap[status]}</option>)}</select></label>{newStatus === "CANCELLED" && <label className="block text-sm font-medium">Lý do hủy<textarea required value={reason} onChange={(e) => setReason(e.target.value)} className="mt-2 w-full rounded-xl border p-3"/></label>}{newStatus === "SHIPPING" && <div className="grid gap-3 sm:grid-cols-2"><Field label="Đơn vị vận chuyển" value={carrier} onChange={setCarrier} required/><Field label="Mã vận đơn" value={trackingCode} onChange={setTrackingCode} required/><Field label="Dịch vụ" value={service} onChange={setService}/><label className="text-sm font-medium">Ngày giao dự kiến<input type="datetime-local" value={estimate} onChange={(e) => setEstimate(e.target.value)} className="mt-2 w-full rounded-xl border p-3"/></label></div>}</> : <p className="rounded-xl bg-slate-50 p-4 text-sm">Đơn đang ở trạng thái kết thúc hoặc phải tiếp tục tại module đổi trả.</p>}{error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm text-red-800">{error}</p>}</div>}
+    </AccessibleDialog>
+  </section>;
+}
+function Field({ label, value, onChange, required=false }: { label: string; value: string; onChange: (value: string) => void; required?: boolean }) { return <label className="text-sm font-medium">{label}<input required={required} value={value} onChange={(e) => onChange(e.target.value)} className="mt-2 w-full rounded-xl border p-3"/></label>; }

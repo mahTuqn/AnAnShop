@@ -1,0 +1,12 @@
+{
+  "title": "An An Shop – Dịu dàng cùng mẹ và bé",
+  "language": "vi",
+  "description": "Thời trang bầu, sau sinh và đồ sơ sinh an toàn, dịu dàng dành cho mẹ và bé.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": true,
+    "ignoreReducedMotion": false
+  }
+}
