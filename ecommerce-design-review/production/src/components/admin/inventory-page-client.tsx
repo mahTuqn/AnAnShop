@@ -40,11 +40,11 @@ export function AdminInventoryClient({ rows }: { rows: InventoryRow[] }) {
   return <section aria-labelledby="inventory-title" data-testid="admin-inventory-page">
     <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">An An Backoffice</p>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">An An Backoffice</p>
         <h1 id="inventory-title" className="text-2xl font-semibold sm:text-3xl">Tồn kho</h1>
         <p className="mt-2 text-sm text-slate-600">Theo dõi tồn thực, lượng giỏ hàng và lịch sử điều chỉnh theo SKU.</p>
       </div>
-      <button type="button" onClick={() => {}} className="min-h-11 rounded-xl bg-[#173c32] px-5 text-sm font-semibold text-white">+ Điều chỉnh</button>
+      <button type="button" onClick={() => {}} className="min-h-11 rounded-xl bg-[#b06b75] px-5 text-sm font-semibold text-white">+ Điều chỉnh</button>
     </div>
     
     <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-3">
@@ -59,14 +59,14 @@ export function AdminInventoryClient({ rows }: { rows: InventoryRow[] }) {
         <td className="px-5 py-4 font-medium">{item.onHand}</td>
         <td className="px-5 py-4 font-bold">{item.available}</td>
         <td className="px-5 py-4 text-xs text-slate-500">{item.updatedAt}</td>
-        <td className="px-5 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${item.status === "Bình thường" ? "bg-emerald-50 text-emerald-800" : item.status === "Sắp hết" ? "bg-amber-50 text-amber-800" : "bg-red-50 text-red-800"}`}>{item.status}</span></td>
+        <td className="px-5 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${item.status === "Bình thường" ? "bg-rose-50 text-rose-800" : item.status === "Sắp hết" ? "bg-amber-50 text-amber-800" : "bg-red-50 text-red-800"}`}>{item.status}</span></td>
         <td className="px-5 py-4 text-right">
-          <button onClick={() => setEditingRow(item)} className="text-[#173c32] underline font-medium hover:text-[#0f2821]">Chi tiết</button>
+          <button onClick={() => setEditingRow(item)} className="text-[#b06b75] underline font-medium hover:text-[#0f2821]">Chi tiết</button>
         </td>
       </tr>)}</tbody>
     </table></div> : <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center"><h2 className="font-semibold">Chưa có dữ liệu tồn kho</h2></div>}
 
-    <AccessibleDialog open={!!editingRow} title={"Chi tiết tồn kho"} onClose={() => setEditingRow(null)} footer={<><button type="button" onClick={() => setEditingRow(null)} className="min-h-11 rounded-xl border border-slate-300 px-5 text-sm font-semibold">Hủy</button><button type="submit" form="inventory-update-form" disabled={submitting} className="min-h-11 rounded-xl bg-[#173c32] px-5 text-sm font-semibold text-white">{submitting ? "Đang lưu..." : "Lưu"}</button></>}>
+    <AccessibleDialog open={!!editingRow} title={"Chi tiết tồn kho"} onClose={() => setEditingRow(null)} footer={<><button type="button" onClick={() => setEditingRow(null)} className="min-h-11 rounded-xl border border-slate-300 px-5 text-sm font-semibold">Hủy</button><button type="submit" form="inventory-update-form" disabled={submitting} className="min-h-11 rounded-xl bg-[#b06b75] px-5 text-sm font-semibold text-white">{submitting ? "Đang lưu..." : "Lưu"}</button></>}>
       {editingRow && <form id="inventory-update-form" onSubmit={handleSave} className="grid gap-4 sm:grid-cols-1">
         <div className="mb-2">
           <h3 className="font-semibold">{editingRow.productName}</h3>

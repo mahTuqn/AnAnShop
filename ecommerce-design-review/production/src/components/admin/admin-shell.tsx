@@ -11,15 +11,15 @@ export function AdminShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-screen bg-[#f7f6f3] text-slate-900">
       <a href="#admin-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2">Bỏ qua điều hướng</a>
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-slate-200 bg-[#173c32] text-white lg:flex lg:flex-col">
-        <Link href="/admin" className="border-b border-white/10 px-7 py-7 text-2xl font-semibold tracking-tight">an an.<span className="ml-2 text-xs font-medium uppercase tracking-[0.22em] text-emerald-100">Admin</span></Link>
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r border-slate-200 bg-[#b06b75] text-white lg:flex lg:flex-col">
+        <Link href="/admin" className="flex items-center gap-3 border-b border-white/10 px-6 py-5 text-2xl font-semibold tracking-tight"><img src="/logo.png" alt="An An Logo" className="h-10 w-auto object-contain rounded-xl" /><span className="text-xs font-medium uppercase tracking-[0.22em] text-rose-100">Admin</span></Link>
         <nav aria-label="Điều hướng quản trị" className="flex-1 space-y-1 overflow-y-auto p-4">
           {adminNav.map(([href, label]) => {
             const active = href === "/admin" ? pathname === href : pathname.startsWith(href);
-            return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`block rounded-xl px-4 py-2.5 text-sm transition ${active ? "bg-white text-[#173c32] shadow-sm" : "text-emerald-50 hover:bg-white/10"}`}>{label}</Link>;
+            return <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`block rounded-xl px-4 py-2.5 text-sm transition ${active ? "bg-white text-[#b06b75] shadow-sm" : "text-rose-50 hover:bg-white/10"}`}>{label}</Link>;
           })}
         </nav>
-        <div className="border-t border-white/10 p-5 text-sm"><p className="font-medium">An An Admin</p><p className="text-emerald-100">Chủ cửa hàng</p></div>
+        <div className="border-t border-white/10 p-5 text-sm"><p className="font-medium">An An Admin</p><p className="text-rose-100">Chủ cửa hàng</p></div>
       </aside>
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:hidden">
         <label className="sr-only" htmlFor="admin-mobile-nav">Chọn khu vực quản trị</label>

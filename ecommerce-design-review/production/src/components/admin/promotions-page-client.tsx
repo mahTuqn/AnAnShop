@@ -68,11 +68,11 @@ export function AdminPromotionsClient({ coupons }: { coupons: Coupon[] }) {
   return <section aria-labelledby="promotions-title" data-testid="admin-promotions-page">
     <div className="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
       <div>
-        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">An An Backoffice</p>
+        <p className="mb-1 text-xs font-semibold uppercase tracking-[0.2em] text-rose-700">An An Backoffice</p>
         <h1 id="promotions-title" className="text-2xl font-semibold sm:text-3xl">Khuyến mãi</h1>
         <p className="mt-2 text-sm text-slate-600">Quản lý và tạo các chương trình giảm giá thật từ Database.</p>
       </div>
-      <button type="button" onClick={() => setEditingCoupon("new")} className="min-h-11 rounded-xl bg-[#173c32] px-5 text-sm font-semibold text-white">+ Tạo khuyến mãi mới</button>
+      <button type="button" onClick={() => setEditingCoupon("new")} className="min-h-11 rounded-xl bg-[#b06b75] px-5 text-sm font-semibold text-white">+ Tạo khuyến mãi mới</button>
     </div>
     
     <div className="mb-4 rounded-2xl border border-slate-200 bg-white p-3">
@@ -84,19 +84,19 @@ export function AdminPromotionsClient({ coupons }: { coupons: Coupon[] }) {
       <tbody className="divide-y divide-slate-100">{shown.map((item) => <tr key={item.id}>
         <td className="px-5 py-4 font-semibold uppercase">{item.code}</td>
         <td className="px-5 py-4">{item.name}</td>
-        <td className="px-5 py-4 font-medium text-emerald-700">{item.type === "FREE_SHIPPING" ? "Miễn phí ship" : item.type === "PERCENTAGE" ? `${item.value}%` : money(Number(item.value))}</td>
+        <td className="px-5 py-4 font-medium text-rose-700">{item.type === "FREE_SHIPPING" ? "Miễn phí ship" : item.type === "PERCENTAGE" ? `${item.value}%` : money(Number(item.value))}</td>
         <td className="px-5 py-4">{money(Number(item.minimumOrder))}</td>
         <td className="px-5 py-4">{item.usedCount} / {item.usageLimit || "∞"}</td>
         <td className="px-5 py-4 text-xs">{item.startsAt}<br/><span className="text-slate-400">đến</span><br/>{item.endsAt}</td>
-        <td className="px-5 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${item.active ? "bg-emerald-50 text-emerald-800" : "bg-slate-100 text-slate-600"}`}>{item.active ? "Đang chạy" : "Tạm dừng"}</span></td>
+        <td className="px-5 py-4"><span className={`rounded-full px-2.5 py-1 text-xs font-medium ${item.active ? "bg-rose-50 text-rose-800" : "bg-slate-100 text-slate-600"}`}>{item.active ? "Đang chạy" : "Tạm dừng"}</span></td>
         <td className="px-5 py-4 text-right space-x-3">
-          <button onClick={() => setEditingCoupon(item)} className="text-[#173c32] underline font-medium hover:text-[#0f2821]">Sửa</button>
-          <button onClick={() => handleToggle(item.id, !item.active)} className="text-emerald-800 underline font-medium">{item.active ? "Dừng" : "Bật"}</button>
+          <button onClick={() => setEditingCoupon(item)} className="text-[#b06b75] underline font-medium hover:text-[#0f2821]">Sửa</button>
+          <button onClick={() => handleToggle(item.id, !item.active)} className="text-rose-800 underline font-medium">{item.active ? "Dừng" : "Bật"}</button>
         </td>
       </tr>)}</tbody>
     </table></div> : <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center"><h2 className="font-semibold">Chưa có mã khuyến mãi nào</h2></div>}
 
-    <AccessibleDialog open={!!editingCoupon} title={editingCoupon === "new" ? "Tạo mã khuyến mãi mới" : "Sửa mã khuyến mãi"} onClose={() => setEditingCoupon(null)} footer={<><button type="button" onClick={() => setEditingCoupon(null)} className="min-h-11 rounded-xl border border-slate-300 px-5 text-sm font-semibold">Hủy</button><button type="submit" form="promo-create-form" disabled={submitting} className="min-h-11 rounded-xl bg-[#173c32] px-5 text-sm font-semibold text-white">{submitting ? "Đang lưu..." : "Lưu mã"}</button></>}>
+    <AccessibleDialog open={!!editingCoupon} title={editingCoupon === "new" ? "Tạo mã khuyến mãi mới" : "Sửa mã khuyến mãi"} onClose={() => setEditingCoupon(null)} footer={<><button type="button" onClick={() => setEditingCoupon(null)} className="min-h-11 rounded-xl border border-slate-300 px-5 text-sm font-semibold">Hủy</button><button type="submit" form="promo-create-form" disabled={submitting} className="min-h-11 rounded-xl bg-[#b06b75] px-5 text-sm font-semibold text-white">{submitting ? "Đang lưu..." : "Lưu mã"}</button></>}>
       {editingCoupon && <form id="promo-create-form" onSubmit={handleSave} className="grid gap-4 sm:grid-cols-2">
         <label className="text-sm font-medium">Mã code (Viết liền, không dấu) <input name="code" required className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-300 px-3 uppercase" placeholder="VD: ANAN10" defaultValue={editingCoupon !== "new" ? editingCoupon.code : ""} /></label>
         <label className="text-sm font-medium">Tên chương trình <input name="name" required className="mt-1.5 min-h-11 w-full rounded-xl border border-slate-300 px-3" placeholder="VD: Giảm 10% khai trương" defaultValue={editingCoupon !== "new" ? editingCoupon.name : ""} /></label>

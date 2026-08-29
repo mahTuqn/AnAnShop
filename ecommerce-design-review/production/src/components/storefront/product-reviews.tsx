@@ -53,15 +53,15 @@ export function ProductReviews({ productId }: { productId: string }) {
   const displayedReviews = expanded ? reviews : reviews?.slice(0, 3);
 
   return <section className="mt-24" id="reviews">
-    <div className="flex justify-between items-end border-b border-[#e2d8d3] pb-4">
+    <div className="flex justify-between items-end border-b border-[#f2e4e6] pb-4">
       <div>
-        <p className="text-xs font-semibold tracking-[.2em] text-[#8a493d]">ĐÁNH GIÁ THỰC TẾ</p>
+        <p className="text-xs font-semibold tracking-[.2em] text-[#c26b77]">ĐÁNH GIÁ THỰC TẾ</p>
         <h2 className="mt-2 font-serif text-3xl">Đánh giá từ khách đã mua</h2>
       </div>
     </div>
     
     {showForm && (
-      <form onSubmit={submitReview} className="mt-6 rounded-2xl bg-[#fdfaf8] p-6 border border-[#e2d8d3]">
+      <form onSubmit={submitReview} className="mt-6 rounded-2xl bg-[#fdfaf8] p-6 border border-[#f2e4e6]">
         <h3 className="font-serif text-xl mb-4">Trải nghiệm của bạn thế nào?</h3>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">Điểm đánh giá</label>
@@ -73,7 +73,7 @@ export function ProductReviews({ productId }: { productId: string }) {
         </div>
         <div className="mb-4">
           <label className="block text-sm font-semibold mb-2">Chia sẻ thêm về sản phẩm (không bắt buộc)</label>
-          <textarea rows={3} className="w-full rounded-xl border border-[#cbbfba] p-3 text-sm focus:border-[#713c33] focus:ring-[#713c33]" placeholder="Chất liệu vải thế nào? Form dáng có chuẩn không?..." value={formComment} onChange={(e) => setFormComment(e.target.value)}></textarea>
+          <textarea rows={3} className="w-full rounded-xl border border-[#cbbfba] p-3 text-sm focus:border-[#ce7a85] focus:ring-[#ce7a85]" placeholder="Chất liệu vải thế nào? Form dáng có chuẩn không?..." value={formComment} onChange={(e) => setFormComment(e.target.value)}></textarea>
         </div>
         <div className="flex items-center gap-4">
           <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}</Button>
@@ -86,8 +86,8 @@ export function ProductReviews({ productId }: { productId: string }) {
     {error && <p className="mt-6 rounded-xl bg-red-50 p-3 text-sm text-red-800" role="alert">{error}</p>}
 
     <div className="mt-8 grid gap-5 md:grid-cols-2">
-      {displayedReviews?.map((review) => <article className="rounded-2xl bg-white p-6 shadow-sm border border-[#f7eeea]" key={review.id}><p className="text-[#b06b38]" aria-label={`${review.rating} trên 5 sao`}>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</p><h3 className="mt-3 font-semibold">{review.fullName}</h3>{review.title && <strong className="mt-3 block">{review.title}</strong>}{review.content && <p className="mt-2 text-sm leading-6 text-[#665a55]">{review.content}</p>}{review.imageUrls.length > 0 && <div className="mt-4 flex gap-2">{review.imageUrls.map((url) => <img className="size-20 rounded-lg object-cover" src={url} alt="Ảnh đánh giá" key={url} />)}</div>}</article>)}
-      {reviews && !reviews.length && <p className="col-span-full rounded-2xl border bg-white p-8 text-center text-sm text-[#665a55]">Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên!</p>}
+      {displayedReviews?.map((review) => <article className="rounded-2xl bg-white p-6 shadow-sm border border-[#fcf4f5]" key={review.id}><p className="text-[#b06b38]" aria-label={`${review.rating} trên 5 sao`}>{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</p><h3 className="mt-3 font-semibold">{review.fullName}</h3>{review.title && <strong className="mt-3 block">{review.title}</strong>}{review.content && <p className="mt-2 text-sm leading-6 text-[#665a5a]">{review.content}</p>}{review.imageUrls.length > 0 && <div className="mt-4 flex gap-2">{review.imageUrls.map((url) => <img className="size-20 rounded-lg object-cover" src={url} alt="Ảnh đánh giá" key={url} />)}</div>}</article>)}
+      {reviews && !reviews.length && <p className="col-span-full rounded-2xl border bg-white p-8 text-center text-sm text-[#665a5a]">Chưa có đánh giá nào cho sản phẩm này. Hãy là người đầu tiên!</p>}
     </div>
 
     {reviews && reviews.length > 3 && (

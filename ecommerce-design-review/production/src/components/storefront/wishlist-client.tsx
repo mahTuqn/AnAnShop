@@ -9,7 +9,7 @@ import { apiRequest } from "@/lib/storefront/api";
 export function WishlistClient({ products }: { products: Product[] }) {
   const [ids, setIds] = useState<string[] | null>(null); const [message, setMessage] = useState(""); const [error, setError] = useState(""); const [pending, setPending] = useState("");
   useEffect(() => { const update = () => setIds(readWishlist()); update(); window.addEventListener("anan:wishlist", update); return () => window.removeEventListener("anan:wishlist", update); }, []);
-  if (ids === null) return <p role="status" className="mt-7 text-sm text-[#6d625d]">Đang tải danh sách yêu thích…</p>;
+  if (ids === null) return <p role="status" className="mt-7 text-sm text-[#6b5e5e]">Đang tải danh sách yêu thích…</p>;
   const saved = products.filter((product) => ids.includes(product.id));
   const move = async (product: Product) => {
     const variant = product.sizes.find((size) => size.variantId);
@@ -22,5 +22,5 @@ export function WishlistClient({ products }: { products: Product[] }) {
     finally { setPending(""); }
   };
   if (!saved.length) return <div className="mt-7">{message && <p className="mb-4 rounded-xl bg-green-50 p-4 text-sm text-green-800" role="status">{message}</p>}<EmptyState title="Chưa có sản phẩm yêu thích" description="Chạm vào biểu tượng trái tim trên sản phẩm để lưu lại cho lần sau." actionHref="/products" action="Khám phá sản phẩm" /></div>;
-  return <><div className="mt-5">{error && <p className="rounded-xl bg-red-50 p-4 text-sm text-red-800" role="alert">{error}</p>}{message && <p className="rounded-xl bg-green-50 p-4 text-sm text-green-800" role="status">{message}</p>}</div><div className="mt-7 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3">{saved.map((product) => <div key={product.id}><ProductCard product={product} /><button className="mt-3 w-full rounded-xl border border-[#713c33] px-4 py-2 text-sm font-semibold text-[#713c33] disabled:opacity-50" disabled={pending === product.id} onClick={() => void move(product)}>{pending === product.id ? "Đang chuyển…" : "Chuyển vào giỏ"}</button></div>)}</div></>;
+  return <><div className="mt-5">{error && <p className="rounded-xl bg-red-50 p-4 text-sm text-red-800" role="alert">{error}</p>}{message && <p className="rounded-xl bg-green-50 p-4 text-sm text-green-800" role="status">{message}</p>}</div><div className="mt-7 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3">{saved.map((product) => <div key={product.id}><ProductCard product={product} /><button className="mt-3 w-full rounded-xl border border-[#ce7a85] px-4 py-2 text-sm font-semibold text-[#ce7a85] disabled:opacity-50" disabled={pending === product.id} onClick={() => void move(product)}>{pending === product.id ? "Đang chuyển…" : "Chuyển vào giỏ"}</button></div>)}</div></>;
 }

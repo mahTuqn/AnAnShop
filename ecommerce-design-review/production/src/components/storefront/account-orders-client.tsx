@@ -34,7 +34,7 @@ export function AccountOrdersClient() {
                   {item.imageUrl ? <img src={item.imageUrl} alt={item.productName || "Sản phẩm"} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-slate-100" />}
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-[#713c33] line-clamp-1">{item.productName || "Sản phẩm"}</h4>
+                  <h4 className="text-sm font-semibold text-[#ce7a85] line-clamp-1">{item.productName || "Sản phẩm"}</h4>
                   <p className="text-sm text-[#625853] mt-1">{item.variantName} x {item.quantity}</p>
                 </div>
               </div>
@@ -45,7 +45,7 @@ export function AccountOrdersClient() {
             <span className="text-sm">
               Tổng tiền: <strong>{money(order.grandTotal)}</strong>
             </span>
-            <Link className="text-sm font-semibold text-white bg-[#713c33] px-4 py-2 rounded-xl hover:bg-[#5a2f27] transition-colors" href={`/account/orders/${order.id}`}>
+            <Link className="text-sm font-semibold text-white bg-[#ce7a85] px-4 py-2 rounded-xl hover:bg-[#5a2f27] transition-colors" href={`/account/orders/${order.id}`}>
               Xem chi tiết
             </Link>
           </div>

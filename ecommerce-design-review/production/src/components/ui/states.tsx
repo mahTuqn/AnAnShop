@@ -1,11 +1,11 @@
 import { ButtonLink } from "./button";
 
 export function EmptyState({ title, description, actionHref = "/products", action = "Khám phá sản phẩm" }: { title: string; description: string; actionHref?: string; action?: string }) {
-  return <section className="mx-auto flex max-w-lg flex-col items-center py-20 text-center" aria-live="polite"><span className="mb-5 grid size-14 place-items-center rounded-full bg-[#f3e5de] text-2xl" aria-hidden>♡</span><h2 className="font-serif text-3xl text-[#332824]">{title}</h2><p className="mt-3 text-[#6d625d]">{description}</p><ButtonLink href={actionHref} className="mt-7">{action}</ButtonLink></section>;
+  return <section className="mx-auto flex max-w-lg flex-col items-center py-20 text-center" aria-live="polite"><span className="mb-5 grid size-14 place-items-center rounded-full bg-[#f7e6e8] text-2xl" aria-hidden>♡</span><h2 className="font-serif text-3xl text-[#3b2f2f]">{title}</h2><p className="mt-3 text-[#6b5e5e]">{description}</p><ButtonLink href={actionHref} className="mt-7">{action}</ButtonLink></section>;
 }
 
 export function ErrorState({ title = "Có điều gì đó chưa ổn", description = "An An chưa thể tải nội dung này. Mẹ vui lòng thử lại sau ít phút." }: { title?: string; description?: string }) {
-  return <section className="mx-auto max-w-xl py-20 text-center" role="alert"><span className="text-3xl" aria-hidden>!</span><h2 className="mt-3 font-serif text-3xl">{title}</h2><p className="mt-3 text-[#6d625d]">{description}</p><ButtonLink href="/" className="mt-7">Về trang chủ</ButtonLink></section>;
+  return <section className="mx-auto max-w-xl py-20 text-center" role="alert"><span className="text-3xl" aria-hidden>!</span><h2 className="mt-3 font-serif text-3xl">{title}</h2><p className="mt-3 text-[#6b5e5e]">{description}</p><ButtonLink href="/" className="mt-7">Về trang chủ</ButtonLink></section>;
 }
 
 export function PageSkeleton() {
