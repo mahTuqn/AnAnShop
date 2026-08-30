@@ -41,7 +41,7 @@ export const PATCH = (request: NextRequest, context: { params: Promise<{ id: str
       await tx.order.update({ where: { id: current.order_id }, data: { paymentStatus: "REFUNDED" } });
     }
 
-    const after = await tx.$queryRawUnsafe<Array<Record<string, unknown>>>(`UPDATE return_requests SET status=$2::return_status,
+    const after = await tx.$queryRawUnsafe<Array<Record<string, unknown>>>(`UPDATE return_requests SET status=$2::varchar,
       admin_note=COALESCE($3,admin_note),resolved_at=CASE WHEN $2 IN ('REJECTED','REFUNDED','CLOSED') THEN NOW() ELSE resolved_at END,updated_at=NOW()
       WHERE id=$1::uuid RETURNING *`, id, checked.value, adminNote ?? null);
     
