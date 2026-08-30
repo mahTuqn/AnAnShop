@@ -17,8 +17,8 @@ export async function issueOneTimeTokenByEmail(email: string, type: OneTimeToken
   const token = randomBytes(32).toString("base64url");
   const expiresAt = new Date(Date.now() + (type === "PASSWORD_RESET" ? 30 : 24 * 60) * 60_000);
   await db.$transaction(async (tx) => {
-    await tx.$executeRawUnsafe("UPDATE auth_tokens SET consumed_at=NOW() WHERE user_id=$1::uuid AND type=$2::token_type AND consumed_at IS NULL", user.id, type);
-    await tx.$executeRawUnsafe("INSERT INTO auth_tokens(user_id,type,token_hash,expires_at) VALUES($1::uuid,$2::token_type,$3,$4)", user.id, type, digest(token), expiresAt);
+    await tx.$executeRawUnsafe("UPDATE auth_tokens SET consumed_at=NOW() WHERE user_id=$1::uuid AND type=$2::varchar AND consumed_at IS NULL", user.id, type);
+    await tx.$executeRawUnsafe("INSERT INTO auth_tokens(user_id,type,token_hash,expires_at) VALUES($1::uuid,$2::varchar,$3,$4)", user.id, type, digest(token), expiresAt);
     if (provider) {
       const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
       const path = type === "PASSWORD_RESET" ? "/reset-password" : "/verify-email";
