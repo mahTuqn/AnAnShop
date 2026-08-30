@@ -99,6 +99,7 @@ model User {
   deletedAt       DateTime?  @map("deleted_at") @db.Timestamptz(6)
   carts           Cart[]
   orders          Order[]
+  reviews         Review[]
   @@map("users")
 }
 
@@ -139,6 +140,7 @@ model Product {
   images           ProductImage[]
   variants         ProductVariant[]
   orderItems       OrderItem[]
+  reviews          Review[]
   @@map("products")
 }
 
@@ -333,3 +335,37 @@ model Payment {
   @@map("payments")
 }
 
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  @@map("review_status")
+}
+
+model Review {
+  id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String       @map("user_id") @db.Uuid
+  productId        String       @map("product_id") @db.Uuid
+  orderItemId      String?      @map("order_item_id") @db.Uuid
+  rating           Int
+  title            String?      @db.VarChar(150)
+  content          String?      @db.VarChar(3000)
+  verifiedPurchase Boolean      @default(false) @map("verified_purchase")
+  status           ReviewStatus @default(PENDING)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
+  user             User         @relation(fields: [userId], references: [id])
+  product          Product      @relation(fields: [productId], references: [id])
+  images           ReviewImage[]
+  @@map("reviews")
+}
+
+model ReviewImage {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  reviewId String @map("review_id") @db.Uuid
+  url      String
+  position Int    @default(0)
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  @@map("review_images")
+}
