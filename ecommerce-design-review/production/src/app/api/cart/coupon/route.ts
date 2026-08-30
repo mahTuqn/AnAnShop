@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ownerFrom, safeRoute } from "@/lib/server/http";
 import { runtime } from "@/lib/server/runtime-selected";
+import { vnd } from "@/modules/shared";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   return safeRoute(async () => {
@@ -28,7 +29,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       lines = checkoutItems.map(item => ({ productId: item.product.id, subtotal: item.lineTotal }));
     }
 
-    const result = await runtime.promotions.evaluate(code, subtotal, lines);
+    const result = await runtime.promotions.evaluate(code, vnd(subtotal), lines.map(l => ({ ...l, subtotal: vnd(l.subtotal) })));
     if (!result.ok) throw result.error;
 
     if (!result.value) return NextResponse.json({ data: null });

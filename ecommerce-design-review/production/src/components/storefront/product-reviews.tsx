@@ -77,7 +77,7 @@ export function ProductReviews({ productId }: { productId: string }) {
         </div>
         <div className="flex items-center gap-4">
           <Button type="submit" disabled={isSubmitting}>{isSubmitting ? "Đang gửi..." : "Gửi đánh giá"}</Button>
-          <Button type="button" variant="ghost" onClick={() => setShowForm(false)}>Hủy</Button>
+          <Button type="button" variant="text" onClick={() => setShowForm(false)}>Hủy</Button>
         </div>
       </form>
     )}
@@ -92,7 +92,7 @@ export function ProductReviews({ productId }: { productId: string }) {
 
     {reviews && reviews.length > 3 && (
       <div className="mt-8 flex justify-center">
-        <Button variant="outline" className="w-full sm:w-auto" onClick={() => setExpanded(!expanded)}>{expanded ? "Thu gọn" : `Xem thêm ${reviews.length - 3} đánh giá`}</Button>
+        <Button variant="secondary" className="w-full sm:w-auto" onClick={() => setExpanded(!expanded)}>{expanded ? "Thu gọn" : `Xem thêm ${reviews.length - 3} đánh giá`}</Button>
       </div>
     )}
   </section>;
