@@ -56,11 +56,14 @@ export type OrderMinAggregateOutputType = {
   discountTotal: runtime.Decimal | null
   taxTotal: runtime.Decimal | null
   grandTotal: runtime.Decimal | null
+  carrier: string | null
+  trackingCode: string | null
   customerNote: string | null
   adminNote: string | null
   idempotencyKey: string | null
   placedAt: Date | null
   confirmedAt: Date | null
+  shippedAt: Date | null
   cancelledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -80,11 +83,14 @@ export type OrderMaxAggregateOutputType = {
   discountTotal: runtime.Decimal | null
   taxTotal: runtime.Decimal | null
   grandTotal: runtime.Decimal | null
+  carrier: string | null
+  trackingCode: string | null
   customerNote: string | null
   adminNote: string | null
   idempotencyKey: string | null
   placedAt: Date | null
   confirmedAt: Date | null
+  shippedAt: Date | null
   cancelledAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -104,11 +110,14 @@ export type OrderCountAggregateOutputType = {
   discountTotal: number
   taxTotal: number
   grandTotal: number
+  carrier: number
+  trackingCode: number
   customerNote: number
   adminNote: number
   idempotencyKey: number
   placedAt: number
   confirmedAt: number
+  shippedAt: number
   cancelledAt: number
   createdAt: number
   updatedAt: number
@@ -146,11 +155,14 @@ export type OrderMinAggregateInputType = {
   discountTotal?: true
   taxTotal?: true
   grandTotal?: true
+  carrier?: true
+  trackingCode?: true
   customerNote?: true
   adminNote?: true
   idempotencyKey?: true
   placedAt?: true
   confirmedAt?: true
+  shippedAt?: true
   cancelledAt?: true
   createdAt?: true
   updatedAt?: true
@@ -170,11 +182,14 @@ export type OrderMaxAggregateInputType = {
   discountTotal?: true
   taxTotal?: true
   grandTotal?: true
+  carrier?: true
+  trackingCode?: true
   customerNote?: true
   adminNote?: true
   idempotencyKey?: true
   placedAt?: true
   confirmedAt?: true
+  shippedAt?: true
   cancelledAt?: true
   createdAt?: true
   updatedAt?: true
@@ -194,11 +209,14 @@ export type OrderCountAggregateInputType = {
   discountTotal?: true
   taxTotal?: true
   grandTotal?: true
+  carrier?: true
+  trackingCode?: true
   customerNote?: true
   adminNote?: true
   idempotencyKey?: true
   placedAt?: true
   confirmedAt?: true
+  shippedAt?: true
   cancelledAt?: true
   createdAt?: true
   updatedAt?: true
@@ -305,11 +323,14 @@ export type OrderGroupByOutputType = {
   discountTotal: runtime.Decimal
   taxTotal: runtime.Decimal
   grandTotal: runtime.Decimal
+  carrier: string | null
+  trackingCode: string | null
   customerNote: string | null
   adminNote: string | null
   idempotencyKey: string | null
   placedAt: Date
   confirmedAt: Date | null
+  shippedAt: Date | null
   cancelledAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -352,11 +373,14 @@ export type OrderWhereInput = {
   discountTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.StringNullableFilter<"Order"> | string | null
+  trackingCode?: Prisma.StringNullableFilter<"Order"> | string | null
   customerNote?: Prisma.StringNullableFilter<"Order"> | string | null
   adminNote?: Prisma.StringNullableFilter<"Order"> | string | null
   idempotencyKey?: Prisma.StringNullableFilter<"Order"> | string | null
   placedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  shippedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -380,11 +404,14 @@ export type OrderOrderByWithRelationInput = {
   discountTotal?: Prisma.SortOrder
   taxTotal?: Prisma.SortOrder
   grandTotal?: Prisma.SortOrder
+  carrier?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackingCode?: Prisma.SortOrderInput | Prisma.SortOrder
   customerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   adminNote?: Prisma.SortOrderInput | Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrderInput | Prisma.SortOrder
   placedAt?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -412,10 +439,13 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   discountTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.StringNullableFilter<"Order"> | string | null
+  trackingCode?: Prisma.StringNullableFilter<"Order"> | string | null
   customerNote?: Prisma.StringNullableFilter<"Order"> | string | null
   adminNote?: Prisma.StringNullableFilter<"Order"> | string | null
   placedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  shippedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -439,11 +469,14 @@ export type OrderOrderByWithAggregationInput = {
   discountTotal?: Prisma.SortOrder
   taxTotal?: Prisma.SortOrder
   grandTotal?: Prisma.SortOrder
+  carrier?: Prisma.SortOrderInput | Prisma.SortOrder
+  trackingCode?: Prisma.SortOrderInput | Prisma.SortOrder
   customerNote?: Prisma.SortOrderInput | Prisma.SortOrder
   adminNote?: Prisma.SortOrderInput | Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrderInput | Prisma.SortOrder
   placedAt?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  shippedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -471,11 +504,14 @@ export type OrderScalarWhereWithAggregatesInput = {
   discountTotal?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  trackingCode?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   customerNote?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   adminNote?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   idempotencyKey?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
   placedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   confirmedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+  shippedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
@@ -494,11 +530,14 @@ export type OrderCreateInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -522,11 +561,14 @@ export type OrderUncheckedCreateInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -548,11 +590,14 @@ export type OrderUpdateInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -576,11 +621,14 @@ export type OrderUncheckedUpdateInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -603,11 +651,14 @@ export type OrderCreateManyInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -626,11 +677,14 @@ export type OrderUpdateManyMutationInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -650,11 +704,14 @@ export type OrderUncheckedUpdateManyInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -684,11 +741,14 @@ export type OrderCountOrderByAggregateInput = {
   discountTotal?: Prisma.SortOrder
   taxTotal?: Prisma.SortOrder
   grandTotal?: Prisma.SortOrder
+  carrier?: Prisma.SortOrder
+  trackingCode?: Prisma.SortOrder
   customerNote?: Prisma.SortOrder
   adminNote?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
   placedAt?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
+  shippedAt?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -716,11 +776,14 @@ export type OrderMaxOrderByAggregateInput = {
   discountTotal?: Prisma.SortOrder
   taxTotal?: Prisma.SortOrder
   grandTotal?: Prisma.SortOrder
+  carrier?: Prisma.SortOrder
+  trackingCode?: Prisma.SortOrder
   customerNote?: Prisma.SortOrder
   adminNote?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
   placedAt?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
+  shippedAt?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -740,11 +803,14 @@ export type OrderMinOrderByAggregateInput = {
   discountTotal?: Prisma.SortOrder
   taxTotal?: Prisma.SortOrder
   grandTotal?: Prisma.SortOrder
+  carrier?: Prisma.SortOrder
+  trackingCode?: Prisma.SortOrder
   customerNote?: Prisma.SortOrder
   adminNote?: Prisma.SortOrder
   idempotencyKey?: Prisma.SortOrder
   placedAt?: Prisma.SortOrder
   confirmedAt?: Prisma.SortOrder
+  shippedAt?: Prisma.SortOrder
   cancelledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -868,11 +934,14 @@ export type OrderCreateWithoutUserInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -894,11 +963,14 @@ export type OrderUncheckedCreateWithoutUserInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -950,11 +1022,14 @@ export type OrderScalarWhereInput = {
   discountTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.StringNullableFilter<"Order"> | string | null
+  trackingCode?: Prisma.StringNullableFilter<"Order"> | string | null
   customerNote?: Prisma.StringNullableFilter<"Order"> | string | null
   adminNote?: Prisma.StringNullableFilter<"Order"> | string | null
   idempotencyKey?: Prisma.StringNullableFilter<"Order"> | string | null
   placedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   confirmedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  shippedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   cancelledAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
@@ -973,11 +1048,14 @@ export type OrderCreateWithoutAddressesInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1000,11 +1078,14 @@ export type OrderUncheckedCreateWithoutAddressesInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1041,11 +1122,14 @@ export type OrderUpdateWithoutAddressesInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1068,11 +1152,14 @@ export type OrderUncheckedUpdateWithoutAddressesInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1093,11 +1180,14 @@ export type OrderCreateWithoutItemsInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1120,11 +1210,14 @@ export type OrderUncheckedCreateWithoutItemsInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1161,11 +1254,14 @@ export type OrderUpdateWithoutItemsInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1188,11 +1284,14 @@ export type OrderUncheckedUpdateWithoutItemsInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1213,11 +1312,14 @@ export type OrderCreateWithoutPaymentsInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1240,11 +1342,14 @@ export type OrderUncheckedCreateWithoutPaymentsInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1281,11 +1386,14 @@ export type OrderUpdateWithoutPaymentsInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1308,11 +1416,14 @@ export type OrderUncheckedUpdateWithoutPaymentsInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1333,11 +1444,14 @@ export type OrderCreateManyUserInput = {
   discountTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: string | null
+  trackingCode?: string | null
   customerNote?: string | null
   adminNote?: string | null
   idempotencyKey?: string | null
   placedAt?: Date | string
   confirmedAt?: Date | string | null
+  shippedAt?: Date | string | null
   cancelledAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1356,11 +1470,14 @@ export type OrderUpdateWithoutUserInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1382,11 +1499,14 @@ export type OrderUncheckedUpdateWithoutUserInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1408,11 +1528,14 @@ export type OrderUncheckedUpdateManyWithoutUserInput = {
   discountTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   taxTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   grandTotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  carrier?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trackingCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customerNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   placedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   confirmedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  shippedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1481,11 +1604,14 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   discountTotal?: boolean
   taxTotal?: boolean
   grandTotal?: boolean
+  carrier?: boolean
+  trackingCode?: boolean
   customerNote?: boolean
   adminNote?: boolean
   idempotencyKey?: boolean
   placedAt?: boolean
   confirmedAt?: boolean
+  shippedAt?: boolean
   cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1510,11 +1636,14 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   discountTotal?: boolean
   taxTotal?: boolean
   grandTotal?: boolean
+  carrier?: boolean
+  trackingCode?: boolean
   customerNote?: boolean
   adminNote?: boolean
   idempotencyKey?: boolean
   placedAt?: boolean
   confirmedAt?: boolean
+  shippedAt?: boolean
   cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1535,11 +1664,14 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   discountTotal?: boolean
   taxTotal?: boolean
   grandTotal?: boolean
+  carrier?: boolean
+  trackingCode?: boolean
   customerNote?: boolean
   adminNote?: boolean
   idempotencyKey?: boolean
   placedAt?: boolean
   confirmedAt?: boolean
+  shippedAt?: boolean
   cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1560,17 +1692,20 @@ export type OrderSelectScalar = {
   discountTotal?: boolean
   taxTotal?: boolean
   grandTotal?: boolean
+  carrier?: boolean
+  trackingCode?: boolean
   customerNote?: boolean
   adminNote?: boolean
   idempotencyKey?: boolean
   placedAt?: boolean
   confirmedAt?: boolean
+  shippedAt?: boolean
   cancelledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "userId" | "guestEmail" | "guestPhone" | "status" | "paymentStatus" | "currency" | "subtotal" | "shippingFee" | "discountTotal" | "taxTotal" | "grandTotal" | "customerNote" | "adminNote" | "idempotencyKey" | "placedAt" | "confirmedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "userId" | "guestEmail" | "guestPhone" | "status" | "paymentStatus" | "currency" | "subtotal" | "shippingFee" | "discountTotal" | "taxTotal" | "grandTotal" | "carrier" | "trackingCode" | "customerNote" | "adminNote" | "idempotencyKey" | "placedAt" | "confirmedAt" | "shippedAt" | "cancelledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Order$userArgs<ExtArgs>
   addresses?: boolean | Prisma.Order$addressesArgs<ExtArgs>
@@ -1607,11 +1742,14 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     discountTotal: runtime.Decimal
     taxTotal: runtime.Decimal
     grandTotal: runtime.Decimal
+    carrier: string | null
+    trackingCode: string | null
     customerNote: string | null
     adminNote: string | null
     idempotencyKey: string | null
     placedAt: Date
     confirmedAt: Date | null
+    shippedAt: Date | null
     cancelledAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -2055,11 +2193,14 @@ export interface OrderFieldRefs {
   readonly discountTotal: Prisma.FieldRef<"Order", 'Decimal'>
   readonly taxTotal: Prisma.FieldRef<"Order", 'Decimal'>
   readonly grandTotal: Prisma.FieldRef<"Order", 'Decimal'>
+  readonly carrier: Prisma.FieldRef<"Order", 'String'>
+  readonly trackingCode: Prisma.FieldRef<"Order", 'String'>
   readonly customerNote: Prisma.FieldRef<"Order", 'String'>
   readonly adminNote: Prisma.FieldRef<"Order", 'String'>
   readonly idempotencyKey: Prisma.FieldRef<"Order", 'String'>
   readonly placedAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly confirmedAt: Prisma.FieldRef<"Order", 'DateTime'>
+  readonly shippedAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly cancelledAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Order", 'DateTime'>

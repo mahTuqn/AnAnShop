@@ -111,3 +111,93 @@ export type OrderItem = Prisma.OrderItemModel
  * 
  */
 export type Payment = Prisma.PaymentModel
+/**
+ * Model Review
+ * 
+ */
+export type Review = Prisma.ReviewModel
+/**
+ * Model ReviewImage
+ * 
+ */
+export type ReviewImage = Prisma.ReviewImageModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Role
+ * 
+ */
+export type Role = Prisma.RoleModel
+/**
+ * Model UserRole
+ * 
+ */
+export type UserRole = Prisma.UserRoleModel
+/**
+ * Model Permission
+ * 
+ */
+export type Permission = Prisma.PermissionModel
+/**
+ * Model RolePermission
+ * 
+ */
+export type RolePermission = Prisma.RolePermissionModel
+/**
+ * Model AuthToken
+ * 
+ */
+export type AuthToken = Prisma.AuthTokenModel
+/**
+ * Model ReturnRequest
+ * 
+ */
+export type ReturnRequest = Prisma.ReturnRequestModel
+/**
+ * Model CouponRedemption
+ * 
+ */
+export type CouponRedemption = Prisma.CouponRedemptionModel
+/**
+ * Model CouponProduct
+ * 
+ */
+export type CouponProduct = Prisma.CouponProductModel
+/**
+ * Model CouponCategory
+ * 
+ */
+export type CouponCategory = Prisma.CouponCategoryModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
+ * Model OrderStatusEvent
+ * 
+ */
+export type OrderStatusEvent = Prisma.OrderStatusEventModel
+/**
+ * Model ReturnItem
+ * 
+ */
+export type ReturnItem = Prisma.ReturnItemModel
+/**
+ * Model Refund
+ * 
+ */
+export type Refund = Prisma.RefundModel
+/**
+ * Model ContentEntry
+ * 
+ */
+export type ContentEntry = Prisma.ContentEntryModel
+/**
+ * Model Address
+ * 
+ */
+export type Address = Prisma.AddressModel
