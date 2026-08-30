@@ -479,3 +479,26 @@ model OrderStatusEvent {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   @@map("order_status_events")
 }
+
+model ReturnItem {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  returnRequestId String   @map("return_request_id") @db.Uuid
+  orderItemId     String   @map("order_item_id") @db.Uuid
+  quantity        Int
+  refundAmount    Decimal  @map("refund_amount") @db.Decimal
+  condition       String?  @db.VarChar(100)
+  resolution      String?  @db.VarChar(100)
+  @@map("return_items")
+}
+
+model Refund {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  paymentId       String   @map("payment_id") @db.Uuid
+  returnRequestId String   @map("return_request_id") @db.Uuid
+  amount          Decimal  @db.Decimal
+  reason          String?  @db.VarChar(1000)
+  status          String   @db.VarChar(50)
+  idempotencyKey  String   @map("idempotency_key") @db.VarChar(100)
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  @@map("refunds")
+}
