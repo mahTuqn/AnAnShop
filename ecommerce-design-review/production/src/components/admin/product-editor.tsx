@@ -58,7 +58,8 @@ export function ProductEditor({ productId, initialData }: { productId: string; i
 
       if (!res.ok) {
         const error = await res.json();
-        alert(error.error || "Có lỗi xảy ra khi lưu");
+        const errorMessage = typeof error.error === 'object' ? error.error.message : error.error;
+        alert(errorMessage || "Có lỗi xảy ra khi lưu");
         return;
       }
 
