@@ -435,6 +435,7 @@ model ReturnRequest {
   reason      String   @db.VarChar(500)
   adminNote   String?  @map("admin_note") @db.VarChar(500)
   requestedAt DateTime @default(now()) @map("requested_at") @db.Timestamptz(6)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
   wasAccepted Boolean  @default(false) @map("was_accepted")
   @@map("return_requests")
 }
