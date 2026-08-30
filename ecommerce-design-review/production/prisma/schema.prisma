@@ -524,3 +524,20 @@ model ContentEntry {
   updatedAt        DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
   @@map("content_entries")
 }
+
+model Address {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String   @map("user_id") @db.Uuid
+  label      String?  @db.VarChar(50)
+  fullName   String   @map("full_name") @db.VarChar(150)
+  phone      String   @db.VarChar(20)
+  province   String   @db.VarChar(100)
+  district   String   @db.VarChar(100)
+  ward       String   @db.VarChar(100)
+  line1      String   @db.VarChar(255)
+  postalCode String?  @map("postal_code") @db.VarChar(20)
+  isDefault  Boolean  @default(false) @map("is_default")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  @@map("addresses")
+}
