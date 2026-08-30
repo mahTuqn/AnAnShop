@@ -355,6 +355,7 @@ model Review {
   status           ReviewStatus @default(PENDING)
   createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
+  moderatedAt      DateTime?    @map("moderated_at") @db.Timestamptz(6)
   user             User         @relation(fields: [userId], references: [id])
   product          Product      @relation(fields: [productId], references: [id])
   images           ReviewImage[]
@@ -429,6 +430,7 @@ model AuthToken {
 model ReturnRequest {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   orderId     String   @map("order_id") @db.Uuid
+  userId      String?  @map("user_id") @db.Uuid
   status      String   @db.VarChar(50)
   reason      String   @db.VarChar(500)
   adminNote   String?  @map("admin_note") @db.VarChar(500)
@@ -501,4 +503,22 @@ model Refund {
   idempotencyKey  String   @map("idempotency_key") @db.VarChar(100)
   createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   @@map("refunds")
+}
+
+model ContentEntry {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type             String
+  status           String    @default("DRAFT") @db.VarChar(50)
+  slug             String    @db.VarChar(255)
+  title            String    @db.VarChar(255)
+  excerpt          String?
+  body             Json      @default("{}")
+  featuredImageUrl String?   @map("featured_image_url") @db.VarChar(1000)
+  seoTitle         String?   @map("seo_title") @db.VarChar(255)
+  seoDescription   String?   @map("seo_description")
+  authorId         String    @map("author_id") @db.Uuid
+  publishedAt      DateTime? @map("published_at") @db.Timestamptz(6)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+  @@map("content_entries")
 }
