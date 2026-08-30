@@ -6,9 +6,9 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   await requireAdminPageSession("/admin/products", "products.write");
   const { id } = await params;
   
+  const db = getPrisma();
   let initialData = null;
   if (id !== "new") {
-    const db = getPrisma();
     const product = await db.product.findUnique({
       where: { id },
       include: {
@@ -31,5 +31,6 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     }
   }
 
-  return <ProductEditor productId={id} initialData={initialData} />;
+  const categories = await db.category.findMany({ select: { id: true, name: true } });
+  return <ProductEditor productId={id} initialData={initialData} categories={categories} />;
 }
