@@ -425,3 +425,57 @@ model AuthToken {
   createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   @@map("auth_tokens")
 }
+
+model ReturnRequest {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderId     String   @map("order_id") @db.Uuid
+  status      String   @db.VarChar(50)
+  reason      String   @db.VarChar(500)
+  adminNote   String?  @map("admin_note") @db.VarChar(500)
+  requestedAt DateTime @default(now()) @map("requested_at") @db.Timestamptz(6)
+  wasAccepted Boolean  @default(false) @map("was_accepted")
+  @@map("return_requests")
+}
+
+model CouponRedemption {
+  id       String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  couponId String  @map("coupon_id") @db.Uuid
+  orderId  String  @map("order_id") @db.Uuid
+  userId   String? @map("user_id") @db.Uuid
+  @@map("coupon_redemptions")
+}
+
+model CouponProduct {
+  couponId  String @map("coupon_id") @db.Uuid
+  productId String @map("product_id") @db.Uuid
+  @@id([couponId, productId])
+  @@map("coupon_products")
+}
+
+model CouponCategory {
+  couponId   String @map("coupon_id") @db.Uuid
+  categoryId String @map("category_id") @db.VarChar(50)
+  @@id([couponId, categoryId])
+  @@map("coupon_categories")
+}
+
+model Notification {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String?  @map("user_id") @db.Uuid
+  channel      String   @db.VarChar(50)
+  templateCode String   @map("template_code") @db.VarChar(100)
+  recipient    String   @db.VarChar(255)
+  payload      Json     @db.JsonB
+  status       String   @db.VarChar(50)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  @@map("notifications")
+}
+
+model OrderStatusEvent {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderId   String   @map("order_id") @db.Uuid
+  status    String   @db.VarChar(50)
+  adminNote String?  @map("admin_note") @db.VarChar(500)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  @@map("order_status_events")
+}
