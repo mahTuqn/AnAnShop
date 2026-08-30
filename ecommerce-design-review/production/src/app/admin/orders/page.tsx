@@ -22,6 +22,7 @@ export default async function Page() {
     details: [
       ["Người nhận", `${o.addresses[0]?.fullName ?? ""} · ${o.addresses[0]?.phone ?? ""}`],
       ["Giao hàng", `${o.addresses[0]?.line1 ?? ""}, ${o.addresses[0]?.ward ?? ""}, ${o.addresses[0]?.district ?? ""}, ${o.addresses[0]?.province ?? ""}`],
+      ["Vận chuyển", o.carrier && o.trackingCode ? `${o.carrier} - ${o.trackingCode}` : "Chưa có thông tin"],
       ["Sản phẩm", `${o.items.length} mặt hàng · ${o.items.reduce((sum, item) => sum + item.quantity, 0)} sản phẩm`],
     ] as [string, string][]
   }));

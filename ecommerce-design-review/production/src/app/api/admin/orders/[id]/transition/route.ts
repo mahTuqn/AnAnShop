@@ -44,6 +44,8 @@ export const PATCH = (request: NextRequest, context: { params: Promise<{ id: str
       await tx.$executeRawUnsafe("UPDATE payments SET status='CANCELLED',updated_at=NOW() WHERE order_id=$1::uuid AND status IN ('PENDING','AUTHORIZED')", id);
     }
 
+    let carrier: string | undefined;
+    let trackingCode: string | undefined;
     if (checked.value === "SHIPPING") {
       const latestPayments = await tx.$queryRawUnsafe<Array<{ method: string; status: string }>>(
         "SELECT method::text,status::text FROM payments WHERE order_id=$1::uuid ORDER BY created_at DESC LIMIT 1 FOR UPDATE", id,
@@ -54,26 +56,11 @@ export const PATCH = (request: NextRequest, context: { params: Promise<{ id: str
         throw new AppError("CONFLICT", "Thanh toán online phải được xác minh trước khi bàn giao vận chuyển", 409);
       }
       const shipment = object(body.shipment, "Thiếu thông tin vận chuyển");
-      const carrier = stringField(shipment, "carrier", { max: 80 })!;
-      const service = stringField(shipment, "service", { optional: true, max: 80 });
-      const trackingCode = stringField(shipment, "trackingCode", { min: 3, max: 120 })!;
-      const estimateRaw = stringField(shipment, "estimatedDeliveryAt", { optional: true, max: 50 });
-      const estimatedDeliveryAt = estimateRaw ? new Date(estimateRaw) : null;
-      if (estimatedDeliveryAt && Number.isNaN(estimatedDeliveryAt.getTime())) throw new AppError("VALIDATION_ERROR", "Ngày giao dự kiến không hợp lệ", 400);
-      // Temporarily bypass missing tables: shipments and shipment_events
-      /*
-      const shipments = await tx.$queryRawUnsafe<Array<{ id: string }>>(`INSERT INTO shipments(order_id,carrier,service,tracking_code,status,shipping_fee,estimated_delivery_at,picked_up_at)
-        VALUES($1::uuid,$2,$3,$4,'IN_TRANSIT',(SELECT shipping_fee FROM orders WHERE id=$1::uuid),$5,NOW())
-        ON CONFLICT(order_id) DO UPDATE SET carrier=EXCLUDED.carrier,service=EXCLUDED.service,tracking_code=EXCLUDED.tracking_code,
-          status='IN_TRANSIT',estimated_delivery_at=EXCLUDED.estimated_delivery_at,picked_up_at=NOW(),updated_at=NOW()
-        RETURNING id`, id, carrier, service ?? null, trackingCode, estimatedDeliveryAt);
-      await tx.$executeRawUnsafe(`INSERT INTO shipment_events(shipment_id,status,description,occurred_at)
-        VALUES($1::uuid,'IN_TRANSIT',$2,NOW())`, shipments[0].id, `Đã bàn giao cho ${carrier}`);
-      */
+      carrier = stringField(shipment, "carrier", { max: 80 })!;
+      trackingCode = stringField(shipment, "trackingCode", { min: 3, max: 120 })!;
     }
 
     if (checked.value === "DELIVERED") {
-      // Shipments table does not exist; skip shipment validation
       // Inventory is no longer tracked; skip inventory decrement
       await tx.$executeRawUnsafe("UPDATE payments SET status='PAID',paid_at=COALESCE(paid_at,NOW()),updated_at=NOW() WHERE order_id=$1::uuid AND method='COD' AND status='PENDING'", id);
     }
@@ -90,6 +77,9 @@ export const PATCH = (request: NextRequest, context: { params: Promise<{ id: str
         paymentStatus: nextPaymentStatus as "PAID" | "CANCELLED" | undefined,
         confirmedAt: checked.value === "CONFIRMED" ? new Date() : undefined,
         cancelledAt: checked.value === "CANCELLED" ? new Date() : undefined,
+        shippedAt: checked.value === "SHIPPING" ? new Date() : undefined,
+        carrier,
+        trackingCode,
         adminNote: reason ?? undefined,
       },
     });
