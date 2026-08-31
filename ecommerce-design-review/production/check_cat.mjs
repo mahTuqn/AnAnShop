@@ -1,0 +1,1 @@
+import { Client } from 'pg'; import { config } from 'dotenv'; config(); const client = new Client({ connectionString: process.env.DATABASE_URL }); client.connect().then(() => client.query('SELECT * FROM categories;')).then(res => { console.table(res.rows); process.exit(0); });
